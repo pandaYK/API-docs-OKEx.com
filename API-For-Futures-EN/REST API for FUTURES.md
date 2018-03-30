@@ -2,8 +2,8 @@
 
 ## Getting Started    
 
-REST , a.k.a Respresntational State Transfer, is one of the most common web services protocol. REST emphasis on its readability, standardization, interoperabilty and scalability.Advantages: 
-   
+REST , a.k.a Respresntational State Transfer, is one of the most common web services protocol. REST emphasis on its readability, standardization, interoperabilty and scalability.Advantages:
+
 - Each URL respresented one web resources in RESTful architecture;
 - Act as a representation of resources between client and server;
 - Client-end is enabled to operate server-side resources with 4 HTTP requests representational state transfer.   
@@ -11,31 +11,54 @@ REST , a.k.a Respresntational State Transfer, is one of the most common web serv
 We recommend developers to use REST API to proceed Contracts trading and withdrawals.
 
 In case of any problem, please contact our support team.    
-    
+
 ## Request Process    
 
 The root url is:`https://www.okex.com/api/v1`     
 
 All requests go over https protocol, The field **contentType** in request header should be:`application/x-www-form-urlencoded`    
-	
+
 There are four simple steps to the request process.  
-  
+
 1. Request parameter: construct the request parameters according to each API interface.
 2. Submit request: use POST or GET method to send request to server.
 3. Server respond: server processes request and returns data to users in JSON format after authentication check.
 4. Data processing: the client processes the returned data.
 
 ## API Reference  
+* Contract Price API : Contract Price API Receive the latest OKEX contract data
+  + /future_ticker          : Get OKEX Contract Price
+  + /future_depth           : Get OKEX Contract Market Depth
+  + /future_trades          : Get Contract Trade History
+  + /future_index           : Get OKEX Contract Index Price
+  + /exchange_rate          : Get USD-CNY Exchange Rate
+  + /future_estimated_price : Get Estimated Delivery Price
+  + /future_kline           : Get Contract Candlestick Data
+  + /future_hold_amount     : Get Total Number Of Current Holding (cont)
+  + /future_price_limit     : Get upper and lower price limit
+* Contract Trade API : Contract Trading API for placing contract orders on OKEX
+  + /future_userinfo        : Get OKEX Contract Account Info（Cross-Margin Mode）
+  + /future_position        : Get User Contract Positions （Cross-Margin Mode）
+  + /future_trade           : Place Orders
+  + /future_trades_history  : Get OKEX Contract Trade History (Not for Personal)
+  + /future\_batch_trade    : Batch Trade
+  + /future_cancel          : Cancel Orders
+  + /future\_order\_info    : Get User Contract Order
+  + /future\_orders\_info   : Get User Contract Order in Batch
+  + /future\_userinfo\_4fix : Get User Account Info (Fixed-Margin Mode)
+  + /future\_position\_4fix : Get User Positions (Fixed-Margin Mode)
+  + /future_explosive       : Get Forced Liquidation Orders
+  + /future_devolve         : Account Fund Transfer
 
-#### Contract Price API 
+#### Contract Price API
 
 Contract Price API Receive the latest OKEX contract data  
 
 1. Get /api/v1/future_ticker    Get OKEX Contract Price
 
-URL `https://www.okex.com/api/v1/future_ticker.do`	
+URL `https://www.okex.com/api/v1/future_ticker.do`
 
-Example	
+Example
 
 ```
 # Request
@@ -44,19 +67,19 @@ GET https://www.okex.com/api/v1/future_ticker.do?symbol=btc_usd&contract_type=th
 {
 	"date":"1411627632",
 	"ticker":{
-		"last":409.2, 
-		"buy" :408.23, 
-		"sell":409.18, 
-		"high":432.0, 
-		"low":405.71, 
-		"vol":55168.0, 
-		"contract_id":20140926012, 
+		"last":409.2,
+		"buy" :408.23,
+		"sell":409.18,
+		"high":432.0,
+		"low":405.71,
+		"vol":55168.0,
+		"contract_id":20140926012,
 		"unit_amount":100.0
 	}
 }
 ```
 
-Return Values	
+Return Values
 
 ```
 buy: best bid
@@ -69,7 +92,7 @@ unit_amount: contract par value
 vol: volume (in last 24 hours)
 ```
 
-Request Parameters	
+Request Parameters
 
 |Parameter|Description|
 | :-----    |:-----   |
@@ -78,7 +101,7 @@ Request Parameters
 
 2. Get /api/v1/future_depth   Get OKEX Contract Market Depth
 
-URL `https://www.okex.com/api/v1/future_depth.do`	
+URL `https://www.okex.com/api/v1/future_depth.do`
 
 Example
 
@@ -104,14 +127,14 @@ GET https://www.okex.com/api/v1/future_depth.do?symbol=btc_usd&contract_type=thi
 }
 ```
 
-Return Values	
+Return Values
 
 ```
 asks :ask depth
 bids :bids depth
 ```
 
-Request Parameters	
+Request Parameters
 
 |Parameter|Description|
 | :-----    | :-----   |
@@ -122,9 +145,9 @@ Request Parameters
 
 3. Get /api/v1/future_trades   Get Contract Trade History
 
-URL `https://www.okex.com/api/v1/future_trades.do`	
+URL `https://www.okex.com/api/v1/future_trades.do`
 
-Example	
+Example
 
 ```
 # Request
@@ -150,7 +173,7 @@ GET https://www.okex.com/api/v1/future_trades.do?symbol=btc_usd&contract_type=th
 ]
 ```
 
-Return Values	
+Return Values
 
 ```
 amount: quantity, in number of contracts
@@ -161,7 +184,7 @@ tid: transaction ID
 type: buy/sell
 ```
 
-Request Parameters	
+Request Parameters
 
 |Parameter|	Description|
 | :-----   | :-----   |
@@ -172,9 +195,9 @@ Request Parameters
 
  4. Get /api/v1/future_index    Get OKEX Contract Index Price
 
-URL `https://www.okex.com/api/v1/future_index.do`	
+URL `https://www.okex.com/api/v1/future_index.do`
 
-Example	
+Example
 
 ```
 # Request
@@ -183,13 +206,13 @@ GET https://www.okex.com/api/v1/future_index.do?symbol=btc_usd
 {"future_index":471.0817}
 ```
 
-Return Values	
+Return Values
 
 ```
 future_index :current futures index price
 ```
 
-Request Parameters	
+Request Parameters
 
 |Parameter|		Description|
 | :-----    | :-----   |
@@ -197,9 +220,9 @@ Request Parameters
 
 5. Get /api/v1/exchange_rate   Get USD-CNY Exchange Rate
 
-URL `https://www.okex.com/api/v1/exchange_rate.do`	
+URL `https://www.okex.com/api/v1/exchange_rate.do`
 
-Example	
+Example
 
 ```
 # Request
@@ -208,22 +231,22 @@ GET https://www.okex.com/api/v1/exchange_rate.do
 { "rate":6.1329 }
 ```
 
-Return Values	
+Return Values
 
 ```
 rate： USD-CNY exchange rate used by OKEX, updated weekly
 ```
 
-Request Parameters	
+Request Parameters
 ```
 none
 ```
 
 6. Get /api/v1/future_estimated_price   Get Estimated Delivery Price
 
-URL `https://www.okex.com/api/v1/future_estimated_price.do`	
+URL `https://www.okex.com/api/v1/future_estimated_price.do`
 
-Example	
+Example
 
 ```
 # Request
@@ -232,14 +255,14 @@ GET https://www.okex.com/api/v1/future_depth.do?symbol=btc_usd
 {"forecast_price":5.4}
 ```
 
-Return Values	
+Return Values
 
 ```
 forecast_price:estimated delivery price  
 Note: only available within 3 hrs before delivery or settlement
 ```
 
-Request Parameters	
+Request Parameters
 
 |Parameter|	Description|
 | :-----    | :-----   |
@@ -247,9 +270,9 @@ Request Parameters
 
 7. Get /api/v1/future_kline   Get Contract Candlestick Data
 
-URL `https://www.okex.com/api/v1/future_kline.do`	
+URL `https://www.okex.com/api/v1/future_kline.do`
 
-Example	
+Example
 
 ```
 # Request
@@ -277,7 +300,7 @@ GET https://www.okex.com/api/v1/future_kline.do
 ]
 ```
 
-Return Values	
+Return Values
 
 ```
 [
@@ -291,7 +314,7 @@ Return Values
 ]
 ```
 
-Request Parameters	
+Request Parameters
 
 |Parameter|		Description|
 | :-----      | :-----   |
@@ -303,9 +326,9 @@ Request Parameters
 
 8. Get /api/v1/future_hold_amount   Get Total Number Of Current Holding (cont)
 
-URL `https://www.okex.com/api/v1/future_hold_amount.do`	
+URL `https://www.okex.com/api/v1/future_hold_amount.do`
 
-Example	
+Example
 
 ```
 # Request
@@ -319,14 +342,14 @@ GET https://www.okex.com/api/v1/future_hold_amount.do?symbol=btc_usd&contract_ty
 ]
 ```
 
-Return Values	
+Return Values
 
 ```
 amount: total number (cont)
 contract_name: contract name
 ```
 
-Request Parameters	
+Request Parameters
 
 |Parameter|	Description|
 | :-----     | :-----   |
@@ -335,9 +358,9 @@ Request Parameters
 
 9. Get /api/v1/future_price_limit   Get upper and lower price limit
 
-URL `https://www.okex.com/api/v1/future_price_limit.do`	
+URL `https://www.okex.com/api/v1/future_price_limit.do`
 
-Example	
+Example
 
 ```
 # Request
@@ -346,29 +369,29 @@ GET https://www.okex.com/api/v1/future_price_limit.do?symbol=btc_usd&contract_ty
 {"high":443.07,"low":417.09}
 ```
 
-Return Values	
+Return Values
 
 ```
 high: limit high price
 low: limit low price
 ```
 
-Request Parameters	
+Request Parameters
 
 |Parameter|		Description|
 | :-----    | :-----   |
 |symbol|btc\_usd   ltc\_usd    eth\_usd    etc\_usd    bch\_usd|
 |contract\_type|contract type: this\_week/next\_week/quarter (required)|
 
-#### Contract Trade API 
+#### Contract Trade API
 
 Contract Trading API for placing contract orders on OKEX
 
 1. POST /api/v1/future_userinfo   Get OKEX Contract Account Info（Cross-Margin Mode）
 
-URL `https://www.okex.com/api/v1/future_userinfo.do`	
+URL `https://www.okex.com/api/v1/future_userinfo.do`
 
-Example	
+Example
 
 ```
 # Request
@@ -395,7 +418,7 @@ POST https://www.okex.com/api/v1/future_userinfo.do
 }
 ```
 
-Return Values	
+Return Values
 
 ```
 account_rights: account equity
@@ -406,7 +429,7 @@ risk_rate: current margin ratio
 
 ```
 
-Request Parameters	
+Request Parameters
 
 |Parameter|		Description|
 | :-----     | :-----   |
@@ -415,9 +438,9 @@ Request Parameters
 
 2. POST /api/v1/future_position   Get User Contract Positions （Cross-Margin Mode）
 
-URL `https://www.okex.com/api/v1/future_position.do`	
+URL `https://www.okex.com/api/v1/future_position.do`
 
-Example	
+Example
 
 ```
 # Request
@@ -448,7 +471,7 @@ POST https://www.okex.com/api/v1/future_position.do
 }
 ```
 
-Return Values	
+Return Values
 
 ```
 buy_amount(double): long position amount(usd)
@@ -469,7 +492,7 @@ contract_type: contract type
 force_liqu_price: estimated margin call price
 ```
 
-Request Parameters	
+Request Parameters
 
 |Parameter|	Description|
 | :-----     | :-----   |
@@ -481,9 +504,9 @@ Request Parameters
 3. POST /api/v1/future_trade   Place Orders
 
 URL `https://www.okex.com/api/v1/future_trade.do`  
-Request frequency 5 times/s	
+Request frequency 5 times/s
 
-Example	
+Example
 
 ```
 # Request
@@ -495,14 +518,14 @@ POST https://www.okex.com/api/v1/future_trade.do
 }
 ```
 
-Return Values	
+Return Values
 
 ```
 order_id: order ID
 result: request result, true means successful
 ```
 
-Request Parameters	
+Request Parameters
 
 |Parameter|		Description|
 | :-----    | :-----   |
@@ -518,9 +541,9 @@ Request Parameters
 
 4. POST /api/v1/future_trades_history    Get OKEX Contract Trade History (Not for Personal)
 
-URL `https://www.okex.com/api/v1/future_trades_history` 
+URL `https://www.okex.com/api/v1/future_trades_history`
 
-Example	
+Example
 
 ```
 # Request
@@ -544,7 +567,7 @@ POST https://www.okex.com/api/v1/future_trades_history.do
 ]
 ```
 
-Return Values	
+Return Values
 
 ```
 amount： quantity, in number of contracts
@@ -554,7 +577,7 @@ tid：transaction ID
 type：buy/sell
 ```
 
-Request Parameters	
+Request Parameters
 
 |Parameter|	Description|
 | :-----   | :-----   |
@@ -569,7 +592,7 @@ Request Parameters
 URL `https://www.okex.com/api/v1/future_batch_trade.do`  
 
 
-Example	
+Example
 
 ```
 # Request
@@ -586,7 +609,7 @@ POST https://www.okex.com/api/v1/future_batch_trade.do
 }
 ```
 
-Return Values	
+Return Values
 
 ```
 result: order successfully placed or not
@@ -597,7 +620,7 @@ Note:
      if fail to place a specific order, the order_id is -1
 ```
 
-Request Parameters	
+Request Parameters
 
 |Parameter|	Description|
 | :-----    | :-----   |
@@ -611,9 +634,9 @@ Request Parameters
 6. POST /api/v1/future_cancel   Cancel Orders
 
 URL `https://www.okex.com/api/v1/future_cancel.do`  
-Request frequency 10 times/s	
+Request frequency 10 times/s
 
-Example	
+Example
 
 ```
 # Request
@@ -625,14 +648,14 @@ POST https://www.okex.com/api/v1/future_cancel.do
 }
 ```
 
-Return Values	
+Return Values
 
 ```
 order_id: order ID
 result: request result, true is successful
 ```
 
-Request Parameters	
+Request Parameters
 
 |Parameter|		Description|
 | :-----    | :-----   |
@@ -646,7 +669,7 @@ Request Parameters
 
 URL `https://www.okex.com/api/v1/future_order_info.do`  	
 
-Example	
+Example
 
 ```
 # Request
@@ -675,7 +698,7 @@ POST https://www.okex.com/api/v1/future_order_info.do
 }
 ```
 
-Return Values	
+Return Values
 
 ```
 amount: order quantity
@@ -693,7 +716,7 @@ unit_amount: contract par value
 lever_rate: leverage rate value, 10 or 20
 ```
 
-Request Parameters	
+Request Parameters
 
 |Parameter|		Description|
 | :-----    | :-----   |
@@ -711,7 +734,7 @@ Request Parameters
 URL `https://www.okex.com/api/v1/future_orders_info.do`  
 
 
-Example	
+Example
 
 ```
 # Request
@@ -769,7 +792,7 @@ POST https://www.okex.com/api/v1/future_orders_info.do
 }
 ```
 
-Return Values	
+Return Values
 
 ```
 amount: order quantity
@@ -787,7 +810,7 @@ unit_amount: contract par value
 lever_rate: leverage rate value, 10 or 20
 ```
 
-Request Parameters	
+Request Parameters
 
 |Parameter|Description|
 | :-----     | :-----   |
@@ -802,7 +825,7 @@ Request Parameters
 URL `https://www.okex.com/api/v1/future_userinfo_4fix.do`  
 
 
-Example	
+Example
 
 ```
 # Request
@@ -843,7 +866,7 @@ POST https://www.okex.com/api/v1/future_userinfo_4fix.do
 }
 ```
 
-Return Values	
+Return Values
 
 ```
 balance: account balance
@@ -858,7 +881,7 @@ unprofit: unrealized
 rights: account equity
 ```
 
-Request Parameters	
+Request Parameters
 
 |Parameter|	Description|
 | :-----   | :-----   |
@@ -868,7 +891,7 @@ Request Parameters
 10. POST /api/v1/future\_position\_4fix   Get User Positions (Fixed-Margin Mode)
 
 URL `https://www.okex.com/api/v1/future_position_4fix.do`  
-Example	
+Example
 
 ```
 # Request
@@ -902,7 +925,7 @@ POST https://www.okex.com/api/v1/future_position_4fix.do
 }
 ```
 
-Return Values	
+Return Values
 
 ```
 buy_amount: long position quantity
@@ -925,10 +948,10 @@ sell_price_avg: average open price
 sell_price_cost: cost price
 sell_profit_real: short position realized gain/loss
 symbol: btc_usd   ltc_usd    eth_usd    etc_usd    bch_usd
-lever_rate: leverage rate 
+lever_rate: leverage rate
 ```
 
-Request Parameters	
+Request Parameters
 
 |Parameter|		Description|
 | :-----   | :-----   |
@@ -940,9 +963,9 @@ Request Parameters
 
 11. POST /api/v1/future_explosive   Get Forced Liquidation Orders
 
-URL `https://www.okex.com/api/v1/future_explosive.do` 
+URL `https://www.okex.com/api/v1/future_explosive.do`
 
-Example	
+Example
 
 ```
 # Request
@@ -991,7 +1014,7 @@ POST https://www.okex.com/api/v1/future_explosive.do
 ]
 ```
 
-Return Values	
+Return Values
 
 ```
 amount: order quantity(unit: contract)
@@ -1002,7 +1025,7 @@ type：1:open long position; 2:open short position; 3:liquidate long position; 4
 
 ```
 
-Request Parameters	
+Request Parameters
 
 |Parameter|	Description|
 | :-----     | :-----   |
@@ -1019,7 +1042,7 @@ Request Parameters
 
 URL `https://www.okex.com/api/v1/future_devolve.do`  	
 
-Example	
+Example
 
 ```
 # Request
@@ -1035,13 +1058,13 @@ POST https://www.okex.com/api/v1/future_devolve.do
 }
 ```
 
-Return Values	
+Return Values
 
 ```
 result: Transfer result. In case of error, returns the error code.
 ```
 
-Request Parameters	
+Request Parameters
 
 |Parameter|		Description|
 | :-----     | :-----   |
@@ -1050,16 +1073,3 @@ Request Parameters
 |symbol|btc\_usd   ltc\_usd    eth\_usd    etc\_usd    bch\_usd|
 |type|1: Spot to futures, 2: Futures to spot|
 |amount| Amount in coins|
-
-
-
-
-
-
-
-
-
-
-
-
-
