@@ -54,7 +54,7 @@ There are four simple steps to the request process.
 
 Contract Price API Receive the latest OKEX contract data  
 
-1. Get /api/v1/future_ticker    Get OKEX Contract Price
+##### 1. Get /api/v1/future_ticker    Get OKEX Contract Price
 
 URL `https://www.okex.com/api/v1/future_ticker.do`
 
@@ -99,7 +99,7 @@ Request Parameters
 |symbol|btc\_usd   ltc\_usd      eth\_usd      etc\_usd     bch\_usd|
 |contract\_type|this\_week   next\_week   quarter|
 
-2. Get /api/v1/future_depth   Get OKEX Contract Market Depth
+##### 2. Get /api/v1/future_depth   Get OKEX Contract Market Depth
 
 URL `https://www.okex.com/api/v1/future_depth.do`
 
@@ -143,7 +143,7 @@ Request Parameters
 |size|value：5-200|
 |merge|value：1(merge depth)|
 
-3. Get /api/v1/future_trades   Get Contract Trade History
+##### 3. Get /api/v1/future_trades   Get Contract Trade History
 
 URL `https://www.okex.com/api/v1/future_trades.do`
 
@@ -193,7 +193,7 @@ Request Parameters
 
 
 
- 4. Get /api/v1/future_index    Get OKEX Contract Index Price
+#####  4. Get /api/v1/future_index    Get OKEX Contract Index Price
 
 URL `https://www.okex.com/api/v1/future_index.do`
 
@@ -218,7 +218,7 @@ Request Parameters
 | :-----    | :-----   |
 |symbol|btc\_usd   ltc\_usd    eth\_usd    etc\_usd    bch\_usd|
 
-5. Get /api/v1/exchange_rate   Get USD-CNY Exchange Rate
+##### 5. Get /api/v1/exchange_rate   Get USD-CNY Exchange Rate
 
 URL `https://www.okex.com/api/v1/exchange_rate.do`
 
@@ -242,7 +242,7 @@ Request Parameters
 none
 ```
 
-6. Get /api/v1/future_estimated_price   Get Estimated Delivery Price
+##### 6. Get /api/v1/future_estimated_price   Get Estimated Delivery Price
 
 URL `https://www.okex.com/api/v1/future_estimated_price.do`
 
@@ -268,7 +268,7 @@ Request Parameters
 | :-----    | :-----   |
 |symbol|btc\_usd   ltc\_usd    eth\_usd    etc\_usd    bch\_usd|
 
-7. Get /api/v1/future_kline   Get Contract Candlestick Data
+##### 7. Get /api/v1/future_kline   Get Contract Candlestick Data
 
 URL `https://www.okex.com/api/v1/future_kline.do`
 
@@ -324,7 +324,7 @@ Request Parameters
 |size|specify data size to be acquired|
 |since|timestamp(eg:1417536000000). data after the timestamp will be returned|
 
-8. Get /api/v1/future_hold_amount   Get Total Number Of Current Holding (cont)
+##### 8. Get /api/v1/future_hold_amount   Get Total Number Of Current Holding (cont)
 
 URL `https://www.okex.com/api/v1/future_hold_amount.do`
 
@@ -356,7 +356,7 @@ Request Parameters
 |symbol|btc\_usd   ltc\_usd    eth\_usd    etc\_usd    bch\_usd|
 |contract\_type|contract type: this\_week/next\_week/quarter|
 
-9. Get /api/v1/future_price_limit   Get upper and lower price limit
+##### 9. Get /api/v1/future_price_limit   Get upper and lower price limit
 
 URL `https://www.okex.com/api/v1/future_price_limit.do`
 
@@ -387,7 +387,7 @@ Request Parameters
 
 Contract Trading API for placing contract orders on OKEX
 
-1. POST /api/v1/future_userinfo   Get OKEX Contract Account Info（Cross-Margin Mode）
+##### 1. POST /api/v1/future_userinfo   Get OKEX Contract Account Info（Cross-Margin Mode）
 
 URL `https://www.okex.com/api/v1/future_userinfo.do`
 
@@ -436,7 +436,7 @@ Request Parameters
 |api_key|apiKey of the user|
 |sign|signature of request parameters|
 
-2. POST /api/v1/future_position   Get User Contract Positions （Cross-Margin Mode）
+##### 2. POST /api/v1/future_position   Get User Contract Positions （Cross-Margin Mode）
 
 URL `https://www.okex.com/api/v1/future_position.do`
 
@@ -501,7 +501,7 @@ Request Parameters
 |api_key|apiKey of the user|
 |sign|signature of request parameters|
 
-3. POST /api/v1/future_trade   Place Orders
+##### 3. POST /api/v1/future_trade   Place Orders
 
 URL `https://www.okex.com/api/v1/future_trade.do`  
 Request frequency 5 times/s
@@ -539,7 +539,7 @@ Request Parameters
 |match_price|match best counter party price (BBO)? 0: No    1: Yes   If yes, the 'price' field is ignored|
 |lever_rate|Leverage settings have to be adjusted on the trading page before creating an order. If you currently have 10x open order(s) or holding position(s), you cannot create a new 20x order.|
 
-4. POST /api/v1/future_trades_history    Get OKEX Contract Trade History (Not for Personal)
+##### 4. POST /api/v1/future_trades_history    Get OKEX Contract Trade History (Not for Personal)
 
 URL `https://www.okex.com/api/v1/future_trades_history`
 
@@ -587,7 +587,7 @@ Request Parameters
 |date|contract delivery date, format :yyyy-MM-dd|
 |since|the start of transaction id|
 
-5. POST /api/v1/future\_batch_trade   Batch Trade
+##### 5. POST /api/v1/future\_batch_trade   Batch Trade
 
 URL `https://www.okex.com/api/v1/future_batch_trade.do`  
 
@@ -631,7 +631,7 @@ Request Parameters
 |sign|signature of request parameters|
 |lever_rate|Leverage settings have to be adjusted on the trading page before creating an order. If you currently have 10x open order(s) or holding position(s), you cannot create a new 20x order.|
 
-6. POST /api/v1/future_cancel   Cancel Orders
+##### 6. POST /api/v1/future_cancel   Cancel Orders
 
 URL `https://www.okex.com/api/v1/future_cancel.do`  
 Request frequency 10 times/s
@@ -665,7 +665,7 @@ Request Parameters
 |sign|signature of request parameters|
 |contract\_type|this\_week   next\_week   quarter|
 
-7. POST /api/v1/future\_order\_info   Get User Contract Order
+##### 7. POST /api/v1/future\_order\_info   Get User Contract Order
 
 URL `https://www.okex.com/api/v1/future_order_info.do`  	
 
@@ -729,7 +729,7 @@ Request Parameters
 |current\_page|current page number|
 |page_length|number of orders per page, maximum 50|
 
-8. POST /api/v1/future\_orders\_info   Get User Contract Order in Batch
+##### 8. POST /api/v1/future\_orders\_info   Get User Contract Order in Batch
 
 URL `https://www.okex.com/api/v1/future_orders_info.do`  
 
@@ -820,7 +820,7 @@ Request Parameters
 |sign|signature of request parameters|
 |order_id|order ID (multiple orders are separated by a comma ',', Max of 50 orders are allowed per request)|
 
-9. POST /api/v1/future\_userinfo\_4fix   Get User Account Info (Fixed-Margin Mode)
+##### 9. POST /api/v1/future\_userinfo\_4fix   Get User Account Info (Fixed-Margin Mode)
 
 URL `https://www.okex.com/api/v1/future_userinfo_4fix.do`  
 
@@ -888,7 +888,7 @@ Request Parameters
 |api_key|apiKey of the user|
 |sign|signature of request parameters|
 
-10. POST /api/v1/future\_position\_4fix   Get User Positions (Fixed-Margin Mode)
+##### 10. POST /api/v1/future\_position\_4fix   Get User Positions (Fixed-Margin Mode)
 
 URL `https://www.okex.com/api/v1/future_position_4fix.do`  
 Example
@@ -961,7 +961,7 @@ Request Parameters
 |sign|signature of request parameters|
 |type|by default, futures positions with leverage rate 10 are returned. If type = 1, all futures positions are returned|
 
-11. POST /api/v1/future_explosive   Get Forced Liquidation Orders
+##### 11. POST /api/v1/future_explosive   Get Forced Liquidation Orders
 
 URL `https://www.okex.com/api/v1/future_explosive.do`
 
@@ -1038,7 +1038,7 @@ Request Parameters
 |page_number|current page number(current\_page is invalid when using page\_number，don't send current\_page )|
 |page_length|number of orders per page, maximum 50|
 
-12. POST /api/v1/future_devolve   Account Fund Transfer
+##### 12. POST /api/v1/future_devolve   Account Fund Transfer
 
 URL `https://www.okex.com/api/v1/future_devolve.do`  	
 
