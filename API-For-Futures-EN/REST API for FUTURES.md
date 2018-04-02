@@ -437,6 +437,13 @@ Request Parameters
 |sign|signature of request parameters|
 
 ##### 2. POST /api/v1/future_position   Get User Contract Positions （Cross-Margin Mode）
+###### order_id
+* returned by Placing order(s)
+  + single order
+  + batch order
+* used for cancelling order(s)
+* used for getting the information of order
+
 
 URL `https://www.okex.com/api/v1/future_position.do`
 
@@ -502,6 +509,8 @@ Request Parameters
 |sign|signature of request parameters|
 
 ##### 3. POST /api/v1/future_trade   Place Orders
+Simply place a order.  
+Take order details and return order_id.  
 
 URL `https://www.okex.com/api/v1/future_trade.do`  
 Request frequency 5 times/s
