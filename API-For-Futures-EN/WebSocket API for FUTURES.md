@@ -1,5 +1,21 @@
 # WebSocket API for FUTURES    
 
+## Indices
+* Contract Price API: Receive the latest OKEX contract data
+  + ok_sub_futureusd_X_ticker_Y: Subscribe Contract Market Price
+  + ok_sub_futureusd_X_kline_Y_Z: Subscribe Contract Candlestick Chart Data
+  + ok_sub_futureusd_X_depth_Y: Subscribe Contract Market Depth(Incremental)
+  + ok_sub_futureusd_X_depth_Y_Z: Subscribe Contract Market Depth(Full)
+  + ok_sub_futureusd_X_trade_Y: Subscribe Contract Trade Record
+  + ok_sub_futureusd_X_index: Subscribe Contract Index Price
+  + X_forecast_price: Estimated futures delivery price
+* Contract Trade API: Easily place contract orders on OKEX
+  + login: Login(Personal Information)
+  + ok_sub_futureusd_trades: Subscribe Contract Trade Records
+  + ok_sub_futureusd_userinfo: Contract User Info
+  + ok_sub_futureusd_positions: Contract User Position Info
+*
+
 ## Getting Started    
 
 WebSocket protocol is a new HTML5 protocol, which provides full-duplex communication between web browsers and web servers. Connection can be established after one handshake. Web server can then push business logic data to web browsers.Advantages:
@@ -10,13 +26,13 @@ WebSocket protocol is a new HTML5 protocol, which provides full-duplex communica
 We strongly recommend developers to use Websocket API to access market related information and trading depth.
 
 Should you have any questions, feel free to contact our support team.    
-    
+
 ## Request Process    
 
 OKEx Contract WebSocket URL：`wss://real.okex.com:10440/websocket/okexapi`         
-	
+
 #### Send Request    
-Request Data Format: 
+Request Data Format:
 
 ```
 {'event':'addChannel','channel':'channelValue','parameters':{'api\_key':'value1','sign':'value2'}}.   
@@ -37,15 +53,15 @@ Note:
 Example:
 
 ```
-websocket.send("{'event':'addChannel','channel':'ok\_btcusd\_ticker' }")	
+websocket.send("{'event':'addChannel','channel':'ok\_btcusd\_ticker' }")
 
-websocket.send("[{'event':'addChannel','channel':'ok\_btcusd\_ticker'},{'event':'addChannel','channel':'ok\_btcusd\_depth'},{'event':'addChannel','channel':'ok\_btcusd\_trades'}]"); Support batch register 
+websocket.send("[{'event':'addChannel','channel':'ok\_btcusd\_ticker'},{'event':'addChannel','channel':'ok\_btcusd\_depth'},{'event':'addChannel','channel':'ok\_btcusd\_trades'}]"); Support batch register
 ```
-   
+
 #### Server Response
 Return Data Format:
 ```
-[{"channel":"channel","success":"","errorcode":"","data":{}},{"channel":"channel","success":"","errorcode":1,"data":{}}] 
+[{"channel":"channel","success":"","errorcode":"","data":{}},{"channel":"channel","success":"","errorcode":1,"data":{}}]
 ```
 channel: requested data type
 result: true,false(applicable to WebSocket Trade API)
@@ -60,16 +76,16 @@ OKEX provides heartbeat verification process. Clients send: {'event':'ping'} per
 
 ## API Reference  
 
-### Contract Price API 
+### Contract Price API
 
 Receive the latest OKEX contract data
-  
+
 1. ok\_sub\_futureusd\_X\_ticker\_Y   Subscribe Contract Market Price
 
-`websocket.send("{'event':'addChannel','channel':'ok_sub_futureusd_X_ticker_Y'}");`	
+`websocket.send("{'event':'addChannel','channel':'ok_sub_futureusd_X_ticker_Y'}");`
 ① value of X is: btc, ltc, eth, etc, bch  
 ② value of Y is: this_week, next_week, quarter
-Example	
+Example
 
 ```
 # Request Example
@@ -95,7 +111,7 @@ Example
 ]
 ```
 
-Returned Value Description	
+Returned Value Description
 
 ```
 limitHigh(string):maximum buy price
@@ -112,15 +128,15 @@ low(double):the lowest price within 24 hours
 
 2. ok\_sub\_futureusd\_X\_kline\_Y\_Z   Subscribe Contract Candlestick Chart Data
 
-`websocket.send("{'event':'addChannel','channel':'ok_sub_futureusd_X_kline_Y_Z'}");`	
+`websocket.send("{'event':'addChannel','channel':'ok_sub_futureusd_X_kline_Y_Z'}");`
 ① value of X is:btc, ltc, eth, etc, bch  
 ② value of Y is:this\_week, next\_week, quarter  
 ③ value of Z is:1min, 3min, 5min, 15min, 30min, 1hour, 2hour, 4hour, 6hour, 12hour, day, 3day, week
 
-Example	
+Example
 
 ```
-# Request 
+# Request
 {'event':'addChannel','channel':'ok_sub_futureusd_btc_kline_this_week_1min'}
 # Response
 [
@@ -141,7 +157,7 @@ Example
 ]
 ```
 
-Returned Value Description	
+Returned Value Description
 
 ```
 [time, open price, highest price, lowest price, close price, volume]
@@ -150,14 +166,14 @@ Returned Value Description
 
 3. ok\_sub\_futureusd\_X\_depth_Y   Subscribe Contract Market Depth(Incremental)
 
-`websocket.send("{'event':'addChannel','channel':'ok_sub_futureusd_X_depth_Y'}");`	
+`websocket.send("{'event':'addChannel','channel':'ok_sub_futureusd_X_depth_Y'}");`
 ① the value of X is: btc, ltc, eth, etc, bch  
 ② the value of Y is: this\_week, next\_week, quarter
 
-Example	
+Example
 
 ```
-# Request 
+# Request
 {'event':'addChannel','channel':'ok_sub_futureusd_btc_depth_this_week'}
 # Response
 [
@@ -187,7 +203,7 @@ Example
 ]
 ```
 
-Returned Value Description	
+Returned Value Description
 
 ```
 timestamp(long): Server timestamp
@@ -206,12 +222,12 @@ timestamp: Server timestamp
 
 4. ok\_sub\_futureusd\_X\_depth\_Y\_Z   Subscribe Contract Market Depth(Full)
 
-`websocket.send("{'event':'addChannel','channel':'ok_sub_futureusd_X_depth_Y_Z'}");`	
+`websocket.send("{'event':'addChannel','channel':'ok_sub_futureusd_X_depth_Y_Z'}");`
 ① value of X is:btc, ltc, eth, etc, bch  
 ② Yvalue of Y is:this\_week, next\_week, quarter  
-③ value of Z is:5, 10, 20(Amount) 
+③ value of Z is:5, 10, 20(Amount)
 
-Example	
+Example
 
 ```
 # Request
@@ -244,7 +260,7 @@ Example
 ]
 ```
 
-Returned Value Description	
+Returned Value Description
 
 ```
 timestamp(long): Server timestamp
@@ -255,14 +271,14 @@ bids(array): Bid depth Array index(string) [Price, Amount(Contract), Amount(Coin
 
 5. ok\_sub\_futureusd\_X\_trade\_Y   Subscribe Contract Trade Record
 
-`websocket.send("{'event':'addChannel','channel':'ok_sub_futureusd_X_trade_Y'}");`	
+`websocket.send("{'event':'addChannel','channel':'ok_sub_futureusd_X_trade_Y'}");`
 ① X值为：btc, ltc, eth, etc, bch  
 ② Y值为：this\_week, next\_week, quarter   
 
-Example	
+Example
 
 ```
-# Request 
+# Request
 {'event':'addChannel','channel':'ok_sub_futureusd_btc_trade_this_week'}
 # Response
 [
@@ -297,7 +313,7 @@ Example
 ]
 ```
 
-Returned Value Description	
+Returned Value Description
 
 ```
 [tid, price, amount, time, type,amountbtc]
@@ -306,11 +322,11 @@ Returned Value Description
 
 6. ok\_sub\_futureusd\_X\_index   Subscribe Contract Index Price
 
-`websocket.send("{'event':'addChannel','channel':'ok_sub_futureusd_X_index'}");`	
+`websocket.send("{'event':'addChannel','channel':'ok_sub_futureusd_X_index'}");`
 ① value of X is:btc, ltc, eth, etc, bch  
-  
 
-Example	
+
+Example
 
 ```
 # Request
@@ -327,7 +343,7 @@ Example
 ]
 ```
 
-Returned Value Description	
+Returned Value Description
 
 ```
 futureIndex: current future index price
@@ -336,11 +352,11 @@ timestamp: server timestamp
 
 7. X\_forecast\_price   Estimated futures delivery price
 
-	
-① value of X is：btc, ltc, eth, etc, bch  
-  
 
-Example	
+① value of X is：btc, ltc, eth, etc, bch  
+
+
+Example
 
 ```
 # Response
@@ -351,7 +367,7 @@ Example
 }]
 ```
 
-Returned Value Description	
+Returned Value Description
 
 ```
 Estimated futures delivery price
@@ -361,13 +377,13 @@ Hint: This does not need to be subscribed and will be automatically returned 1 h
 
 ```
 
-### Contract Trade API 
+### Contract Trade API
 
 Easily place contract orders on OKEX
 
 1. login   Login(Personal Information)  
 
-Example	
+Example
 
 ```
 # Request
@@ -382,14 +398,14 @@ Example
     }
 ]
 ```
-Request Parameters	
+Request Parameters
 
 |Parameter Name|	Description|
 | :-----   | :-----   |
 |api_key|apiKey of the user|
 |sign|signature of request parameters|
 
-Description	
+Description
 
 ```
 The data will return when it changed. These types need not be subscribed.
@@ -398,7 +414,7 @@ eg:ok_sub_futureusd_trades,ok_sub_futureusd_userinfo,ok_sub_futureusd_positions
 
 2. ok\_sub\_futureusd\_trades   Subscribe Contract Trade Records  
 
-Example	
+Example
 
 ```
 # Response
@@ -428,7 +444,7 @@ Example
 ```
 
 
-Returned Value Description	
+Returned Value Description
 
 ```
 amount (double): order quantity
@@ -448,7 +464,7 @@ unit_amount(double) : contract par value
 lever_rate (double): leverage rate
 ```
 
-Request Parameters	
+Request Parameters
 
 |Parameter Name|	Description|
 | :-----   | :-----   |
@@ -457,9 +473,9 @@ Request Parameters
 
 
 3. ok\_sub\_futureusd\_userinfo   Contract User Info
-  
 
-Example	
+
+Example
 
 ```
 # Response
@@ -511,7 +527,7 @@ The Cross Margin Account Info
 ```
 
 
-Returned Value Description	
+Returned Value Description
 
 ```
 The Cross Margin Account Info
@@ -535,7 +551,7 @@ profit(double):realized
 unprofit(double):Un Realized
 ```
 
-Description	
+Description
 
 ```
 There is no need to subscribe to the login, compatible with the old subscription, the old subscription is equivalent to the login operation.
@@ -545,9 +561,9 @@ Response:
 
 
 4. ok\_sub\_futureusd\_positions   Contract User Position Info
-  
 
-Example	
+
+Example
 
 ```
 # Response
@@ -629,7 +645,7 @@ Fix Margin Model Account Info
 ```
 
 
-Returned Value Description	
+Returned Value Description
 
 ```
 The Cross Margin Account Info
@@ -666,7 +682,7 @@ symbol(string): btc_usd   ltc_usd   eth_usd   etc_usd   bch_usd
 user_id(long):user_id
 ```
 
-Description	
+Description
 
 ```
 There is no need to subscribe to the login, compatible with the old subscription, the old subscription is equivalent to the login operation.
