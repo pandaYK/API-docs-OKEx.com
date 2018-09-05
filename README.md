@@ -53,16 +53,19 @@ WebSocket是HTML5一种新的协议(Protocol)。它实现了客户端与服务�
 
 例如：对于如下的参数进行签名   
 
-	string[] parameters={"api_key=c821db84-6fbd-11e4-a9e3-c86000d26d7c","symbol=btc_cny","type=buy","price=680","amount=1.0"};     
+	string[] parameters={"api_key=c821db84-6fbd-11e4-a9e3-c86000d26d7c","symbol=btc_usdt","type=buy","price=680","amount=1.0"};     
 
 生成待签名的字符串    
 
-	amount=1.0&api_key=c821db84-6fbd-11e4-a9e3-c86000d26d7c&price=680&symbol=btc_cny&type=buy    
+	amount=1.0&api_key=c821db84-6fbd-11e4-a9e3-c86000d26d7c&price=680&symbol=btc_usdt&type=buy    
 
 然后，将待签名字符串添加私钥参数生成最终待签名字符串。例如：
 
-	amount=1.0&api_key=c821db84-6fbd-11e4-a9e3-c86000d26d7c&price=680&symbol=btc_cny&type=buy&secret_key=secretKey    
+	amount=1.0&api_key=c821db84-6fbd-11e4-a9e3-c86000d26d7c&price=680&symbol=btc_usdt&type=buy&secret_key=secretKey    
 
 注意，`&secret\_key=secretKey` 为签名必传参数。   
 
-最后，是利用32位MD5算法，对最终待签名字符串进行签名运算，从而得到签名结果字符串(该字符串赋值于参数sign)，MD5计算结果中字母全部大写。    
+最后，是利用32位MD5算法，对最终待签名字符串进行签名运算，从而得到签名结果字符串(该字符串赋值于参数sign)，MD5计算结果中字母全部大写。  
+
+## 联系我们
+如需帮助请添加微信号：jj18515532533 或 wyt244319350  备注：API+OKEX账号，拉你进API问题交流群

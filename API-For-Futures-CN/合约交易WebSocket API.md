@@ -11,7 +11,11 @@ WebSocket是HTML5一种新的协议(Protocol)。它实现了客户端与服务�
     
 ## 请求交互    
 
-**合约交易**WebSocket服务连接地址：`wss://real.okex.com:10440/websocket/okexapi`         
+
+
+**合约交易**WebSocket服务连接地址：`wss://real.okex.com:10440/websocket/okexapi`   
+
+访问时需要科学上网        
 	
 #### 发送请求    
 请求数据格式为：  
@@ -20,10 +24,10 @@ WebSocket是HTML5一种新的协议(Protocol)。它实现了客户端与服务�
 event: addChannel(注册请求数据)/removeChannel(注销请求数据)   
 channel: OKEx提供请求数据类型   
 parameters: 参数为选填参数，其中api_key为用户申请的APIKEY，sign为签名字符串，签名规则参照请求说明   
-binary: 参数为选填参数，是否为压缩数据。1 压缩数据；0 原始数据；默认0     
+    
 
 例如： 
-`websocket.send("{'event':'addChannel','channel':'ok_sub_spot_usd_btc_ticker','binary','1'}")`  
+`websocket.send("{'event':'addChannel','channel':'ok_sub_spot_usd_btc_ticker'}")`  
 `websocket.send("[{'event':'addChannel','channel':'ok_sub_spot_usd_btc_ticker'},{'event':'addChannel','channel':'ok_sub_spot_usd_btc_depth'},{'event':'addChannel','channel':'ok_sub_spot_usd_btc_trades'}]")`,支持批量注册 
 
 #### 服务器响应    
@@ -39,7 +43,7 @@ errorcode: 错误码(用于WebSocket 交易API)
 为保证推送的及时性及减少流量，行情数据（ticker）和委托深度（depth）这两种数据类型只会在数据发生变化的情况下才会推送数据，交易记录（trades）是推送从上次推送到本次推送产生的增量数据。   
 
 #### 如何判断连接是否断开
-OKEx通过心跳机制解决这个问题。客户端每30秒发送一次心跳数据：{'event':'ping'}，服务器会响应客户端：{"event":"pong"}以此来表明客户端和服务端保持正常连接。如果客户端未接到服务端响应的心跳数据则需要客户端重新建立连接。    
+OKEx通过心跳机制解决这个问题。客户端每30秒发送一次心跳数据：{"event":"ping"}，服务器会响应客户端：{"event":"pong"}以此来表明客户端和服务端保持正常连接。如果客户端未接到服务端响应的心跳数据则需要客户端重新建立连接。    
 
 ## API参考  
 
@@ -51,7 +55,7 @@ OKEx通过心跳机制解决这个问题。客户端每30秒发送一次心跳�
 
 `websocket.send("{'event':'addChannel','channel':'ok_sub_futureusd_X_ticker_Y'}");`  
 
-① X值为：btc, ltc, eth, etc, bch.  
+① X值为：btc, ltc, eth, etc, bch,eos,xrp,btg  
 ② Y值为：this\_week, next\_week, quarter
 示例	
 
@@ -86,6 +90,7 @@ limitHigh(string):最高买入限制价格
 limitLow(string):最低卖出限制价格
 vol(double):24小时成交量
 sell(double):卖一价格
+buy(double): 买一价格
 unitAmount(double):合约价值
 hold_amount(double):当前持仓量
 contractId(long):合约ID
@@ -98,7 +103,7 @@ low(double):24小时最低价格
 
 `websocket.send("{'event':'addChannel','channel':'ok_sub_futureusd_X_kline_Y_Z'}");`  
 
-① X值为：btc, ltc, eth, etc, bch  
+① X值为：btc, ltc, eth, etc, bch,eos,xrp,btg 
 ② Y值为：this\_week, next\_week, quarter  
 ③ Z值为：1min, 3min, 5min, 15min, 30min, 1hour, 2hour, 4hour, 6hour, 12hour, day, 3day, week
 示例	
@@ -136,7 +141,7 @@ low(double):24小时最低价格
 
 `websocket.send("{'event':'addChannel','channel':'ok_sub_futureusd_X_depth_Y'}");`  
 
-① X值为：btc, ltc, eth, etc, bch  
+① X值为：btc, ltc, eth, etc, bch,eos,xrp,btg 
 ② Y值为：this\_week, next\_week, quarter
 
 示例	
@@ -176,8 +181,8 @@ low(double):24小时最低价格
 
 ```
 timestamp(long): 服务器时间戳
-asks(array):卖单深度 数组索引(string) 0 价格, 1 量(张), 2 量(币) 3, 累计量(币) 4,累积量(张)
-bids(array):买单深度 数组索引(string) 0 价格, 1 量(张), 2 量(币) 3, 累计量(币) 4,累积量(张)
+asks(array):卖单深度 数组索引(string) 0 价格, 1 量(张), 2 量(币) 3, 累计量(币) 
+bids(array):买单深度 数组索引(string) 0 价格, 1 量(张), 2 量(币) 3, 累计量(币)
 使用描述:
 	1，第一次返回全量数据
 	2，根据接下来数据对第一次返回数据进行，如下操作
@@ -191,7 +196,7 @@ bids(array):买单深度 数组索引(string) 0 价格, 1 量(张), 2 量(币) 3
 
 `websocket.send("{'event':'addChannel','channel':'ok_sub_futureusd_X_depth_Y_Z'}");`	  
 
-① X值为：btc, ltc, eth, etc, bch  
+① X值为：btc, ltc, eth, etc, bch,eos,xrp,btg 
 ② Y值为：this\_week, next\_week, quarter  
 ③ Z值为：5, 10, 20(获取深度条数) 
 
@@ -232,8 +237,8 @@ bids(array):买单深度 数组索引(string) 0 价格, 1 量(张), 2 量(币) 3
 
 ```
 timestamp(long): 服务器时间戳
-asks(array):卖单深度 数组索引(string) [价格, 量(张), 量(币),累计量(币),累积量(张)]
-bids(array):买单深度 数组索引(string) [价格, 量(张), 量(币),累计量(币),累积量(张)]
+asks(array):卖单深度 数组索引(string) [价格, 量(张), 量(币),累计量(币)]
+bids(array):买单深度 数组索引(string) [价格, 量(张), 量(币),累计量(币)]
 ```
 
 
@@ -241,7 +246,7 @@ bids(array):买单深度 数组索引(string) [价格, 量(张), 量(币),累计
 
 `websocket.send("{'event':'addChannel','channel':'ok_sub_futureusd_X_trade_Y'}");`  
 
-① X值为：btc, ltc, eth, etc, bch  
+① X值为：btc, ltc, eth, etc, bch,eos,xrp,btg 
 ② Y值为：this\_week, next\_week, quarter   
 
 示例	
@@ -293,7 +298,7 @@ bids(array):买单深度 数组索引(string) [价格, 量(张), 量(币),累计
 
 `websocket.send("{'event':'addChannel','channel':'ok_sub_futureusd_X_index'}");`  
 
-① X值为：btc, ltc, eth, etc, bch  
+① X值为：btc, ltc, eth, etc, bch,eos,xrp,btg   
   
 
 示例	
@@ -323,7 +328,7 @@ timestamp(string): 时间戳
 7. X\_forecast\_price   合约预估交割价格
 
 	
-① X值为：btc, ltc, eth, etc, bch  
+① X值为：btc, ltc, eth, etc, bch,eos,xrp,btg  
   
 
 示例	
@@ -361,7 +366,6 @@ timestamp(string): 时间戳
 # Response
 [
     {
-        "binary": 0,
         "channel": "login",
         "data": {
             "result": true
@@ -645,7 +649,7 @@ fixmargin(double): 固定保证金
 hold_amount(string): 持仓量
 lever_rate(double): 杠杆倍数
 position_id(long): 仓位id
-symbol(string): btc_usd   ltc_usd   eth_usd   etc_usd   bch_usd
+symbol(string): btc_usd   ltc_usd   eth_usd   etc_usd   bch_usd  eos_usd  xrp_usd btg_usd 
 user_id(long):用户ID
 ```
 

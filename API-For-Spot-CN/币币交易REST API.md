@@ -11,9 +11,9 @@ REST，即Representational State Transfer的缩写，是目前最流行的一种
     
 ## 请求交互    
 
-REST访问的根URL：`https://www.okex.com/api/v1`     
-
-所有请求基于Https协议，请求头信息中contentType需要统一设置为：`application/x-www-form-urlencoded`    
+REST访问的根URL：`https://www.okex.com/api/v1`     
+访问时需要科学上网
+所有请求基于Https协议，请求头信息中contentType需要统一设置为：`application/x-www-form-urlencoded`    
 	
 请求交互说明    
 1. 请求参数：根据接口请求参数规定进行参数封装。    
@@ -112,7 +112,7 @@ bids :买方深度
 |symbol|String|是|币对如ltc_btc|
 |size|Integer|否(默认200)|value: 1-200|
 
-3. Get /api/v1/trades   获取OKEx币币交易信息(600条)
+3. Get /api/v1/trades   获取OKEx币币交易信息(60条)
 
 URL `https://www.okex.com/api/v1/trades.do`	
 
@@ -166,7 +166,7 @@ type: buy/sell
 |参数名|	参数类型|	必填|	描述|
 | :-----    | :-----   | :-----    | :-----   |
 |symbol|String|是|币对如ltc_btc|
-|since|Long|否(默认返回最近成交600条)|tid:交易记录ID(返回数据不包括当前tid值,最多返回600条数据)|
+|since|Long|否(默认返回最近成交60条)|tid:交易记录ID(返回数据不包括当前tid值,最多返回60条数据)|
 
 4. Get /api/v1/kline    获取OKEx币币K线数据(每个周期数据条数2000左右)
 
@@ -239,13 +239,11 @@ POST https://www.okex.com/api/v1/userinfo.do
         "funds": {
             "free": {
                 "btc": "0",
-                "usd": "0",
                 "ltc": "0",
                 "eth": "0"
             },
             "freezed": {
                 "btc": "0",
-                "usd": "0",
                 "ltc": "0",
                 "eth": "0"
             }
@@ -297,7 +295,7 @@ order_id:订单ID
 |symbol|String|是|币对如ltc_btc|
 |type|String|是|买卖类型：限价单(buy/sell) 市价单(buy_market/sell_market)|
 |price|Double|否|下单价格 市价卖单不传price|
-|amount|Double|否|交易数量 市价买单不传amount|
+|amount|Double|否|交易数量 市价买单不传amount,市价买单需传price作为买入总金额|
 |sign|String|是|请求参数的签名|
 
 3. POST /api/v1/batch_trade    批量下单
@@ -719,8 +717,89 @@ status: 记录状态,如果查询充值记录:(-1:充值失败;0:等待确认;1:
 |参数名|	参数类型|	必填|	描述|
 | :-----    | :-----   | :-----    | :-----   |
 |api_key|String|是|用户申请的apiKey|
-|symbol|String|是|币种如btc, ltc, eth, etc, bch, usdt|
+|symbol|String|是|币种如btc_usd, ltc_usd, eth_usd, etc_usd, bch_usd, usdt_usd|
 |type|Integer|是|0：充值 1 ：提现|
 |current_page|Integer|是|当前页数|
 |page_length|Integer|是|每页数据条数，最多不超过50|
 |sign|String|是|请求参数的签名|
+
+12. POST /api/v1/funds_transfer    资金划转
+
+URL `https://www.okex.com/api/v1/funds_transfer.do`	
+
+示例	
+
+```
+# Request
+POST https://www.okex.com/api/v1/funds_transfer.do
+# Response
+{
+    "result":true
+}
+或
+{
+    "error_code":20029,
+    "result":false
+}
+```
+
+返回值说明	
+
+```
+result:划转结果。若是划转失败，将给出错误码提示。
+```
+
+请求参数	
+
+|参数名|	参数类型|	必填|	描述|
+| :-----    | :-----   | :-----    | :-----   |
+|api_key|String|是|用户申请的apiKey|
+|symbol|String|是|btc_usd ltc_usd eth_usd etc_usd bch_usd|
+|amount|Number|是|划转数量|
+|from|Number|是|转出账户(1：币币账户 3：合约账户 6：我的钱包)|
+|to|Number|是|转入账户(1：币币账户 3：合约账户 6：我的钱包)|
+|sign|String|是|请求参数的签名|
+	
+13. POST /api/v1/wallet_info    获取用户钱包账户信息
+
+URL `https://www.okex.com/api/v1/wallet_info.do`	访问频率 6次/2秒    
+
+示例	
+
+```
+# Request
+POST https://www.okex.com/api/v1/wallet_info.do
+# Response
+{
+    "info": {
+        "funds": {
+            "free": {
+                "btc": "0",
+                "ltc": "0",
+                "eth": "0"
+            },
+            "holds": {
+                "btc": "0",
+                "ltc": "0",
+                "eth": "0"
+            }
+        }
+    },
+    "result": true
+}
+```
+
+返回值说明	
+
+```
+free:账户余额
+holds:账户锁定余额
+```
+
+请求参数	
+
+|参数名|	参数类型|	必填|	描述|
+| :-----    | :-----   | :-----    | :-----   |
+|api_key|String|是|用户申请的apiKey|
+|sign|String|是|请求参数的签名|
+

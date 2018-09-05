@@ -116,7 +116,7 @@ Request Parameters
 |symbol|Pairs like : ltc\_btc  etc\_btc|
 |size|value: must be between 1 - 200|
 
-3. Get /api/v1/trades   Get Trade Recently 600
+3. Get /api/v1/trades   Get Trade Recently 60
 
 URL `https://www.okex.com/api/v1/trades.do`	
 
@@ -170,7 +170,7 @@ Request Parameters
 |Parameter|		Description|
 | :-----     | :-----   |
 |symbol|Pairs like : ltc\_btc  etc\_btc|
-|since|get recently 600 pieces of data starting from the given tid (optional)|
+|since|get recently 60 pieces of data starting from the given tid (optional)|
 
 4. Get /api/v1/kline    Get Candlestick Data
 
@@ -244,13 +244,11 @@ POST https://www.okex.com/api/v1/userinfo.do
         "funds": {
             "free": {
                 "btc": "0",
-                "usd": "0",
                 "ltc": "0",
                 "eth": "0"
             },
             "freezed": {
                 "btc": "0",
-                "usd": "0",
                 "ltc": "0",
                 "eth": "0"
             }
@@ -728,8 +726,89 @@ Request Parameters
 |Parameter|		Description|
 | :-----    | :-----   |
 |api_key|apiKey of the user|
-|symbol|Pairs like : ltc\_btc  etc\_btc|
+|symbol|Pairs like : ltc\_usd  etc\_usd|
 |type|0：deposits 1 ：withdraw|
 |current_page|current page number|
 |page_length|data entries number per page, maximum 50|
+|sign|signature of request parameters|
+
+12. POST /api/v1/funds_transfer    Funds transfer
+
+URL `https://www.okex.com/api/v1/funds_transfer.do`	
+
+Example	
+
+```
+# Request
+POST https://www.okex.com/api/v1/funds_transfer.do
+# Response
+{
+    "result":true
+}
+or
+{
+    "error_code":20029,
+    "result":false
+}
+```
+
+Return Values	
+
+```
+result:true for success, false for error
+```
+
+Request Parameters	
+
+|Parameter|		Description|
+| :-----    | :-----   |
+|api_key|apiKey of the user|
+|symbol|Pairs like : ltc\_btc  etc\_btc|
+|amount|The amount to transfer|
+|from|Remitting Account(1:spot 3:futures 6:my wallet)|
+|to|Beneficiary Account(1:spot 3:futures 6:my wallet)|
+|sign|signature of request parameters|
+
+13. POST /api/v1/wallet_info    Get My Wallet Info
+
+URL `https://www.okex.com/api/v1/wallet_info.do`  
+	Request frequency 6 times/2s    
+
+Example	
+
+```
+# Request
+POST https://www.okex.com/api/v1/wallet_info.do
+# Response
+{
+    "info": {
+        "funds": {
+            "free": {
+                "btc": "0",
+                "ltc": "0",
+                "eth": "0"
+            },
+            "holds": {
+                "btc": "0",
+                "ltc": "0",
+                "eth": "0"
+            }
+        }
+    },
+    "result": true
+}
+```
+
+Return Values	
+
+```
+free: available fund
+holds: frozen fund
+```
+
+Request Parameters	
+
+|Parameter|Description|
+| :-----   | :-----   |
+|api_key|apiKey of the user|
 |sign|signature of request parameters|

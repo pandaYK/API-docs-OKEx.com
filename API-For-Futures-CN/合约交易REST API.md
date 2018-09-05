@@ -11,9 +11,11 @@ REST，即Representational State Transfer的缩写，是目前最流行的一种
     
 ## 请求交互    
 
-REST访问的根URL：`https://www.okex.com/api/v1`     
+REST访问的根URL：`https://www.okex.com/api/v1` 
 
-所有请求基于Https协议，请求头信息中contentType需要统一设置为：`application/x-www-form-urlencoded`    
+访问时需要科学上网
+
+所有请求基于Https协议，请求头信息中contentType需要统一设置为：`application/x-www-form-urlencoded`   
 	
 请求交互说明    
 1. 请求参数：根据接口请求参数规定进行参数封装。    
@@ -223,7 +225,7 @@ URL `https://www.okex.com/api/v1/future_estimated_price.do`
 
 ```
 # Request
-GET https://www.okex.com/api/v1/future_depth.do?symbol=btc_usd
+GET https://www.okex.com/api/v1/future_estimated_price.do?symbol=btc_usd
 # Response
 {"forecast_price":5.4}
 ```
@@ -240,7 +242,7 @@ forecast_price:交割预估价  注意：交割预估价只有交割前三小时
 | :-----    | :-----   | :-----    | :-----   |
 |symbol|String|是|btc\_usd   ltc\_usd    eth\_usd    etc\_usd    bch\_usd|
 
-7. Get /api/v1/future_kline   获取OKEx合约深度信息
+7. Get /api/v1/future_kline   获取OKEx合约K线信息
 
 URL `https://www.okex.com/api/v1/future_kline.do`	
 
@@ -248,7 +250,7 @@ URL `https://www.okex.com/api/v1/future_kline.do`
 
 ```
 # Request
-GET https://www.okex.com/api/v1/future_depth.do
+GET https://www.okex.com/api/v1/future_kline.do
 # Response
 [
     [
@@ -361,7 +363,7 @@ low :最低卖价
 
 1. POST /api/v1/future_userinfo   获取OKEx合约账户信息(全仓)
 
-URL `https://www.okex.com/api/v1/future_userinfo.do`	
+URL `https://www.okex.com/api/v1/future_userinfo.do`  访问频率 10次/2秒  
 
 示例	
 
@@ -410,7 +412,7 @@ risk_rate：保证金率
 
 2. POST /api/v1/future_position   获取用户持仓获取OKEX合约账户信息 （全仓）
 
-URL `https://www.okex.com/api/v1/future_position.do`	
+URL `https://www.okex.com/api/v1/future_position.do`  访问频率 10次/2秒 
 
 示例	
 
@@ -475,8 +477,7 @@ force_liqu_price:预估爆仓价
 
 3. POST /api/v1/future_trade   合约下单
 
-URL `https://www.okex.com/api/v1/future_trade.do`  
-访问频率5次/秒	
+URL `https://www.okex.com/api/v1/future_trade.do`  访问频率 5次/1秒(按币种单独计算) 	
 
 示例	
 
@@ -506,14 +507,14 @@ result ： true代表成功返回
 |api_key|String|是|用户申请的apiKey|
 |sign|String|是|请求参数的签名|
 |price|String|是|价格|
-|amount|String|是|委托数量|
+|amount|String|是|委托数量（张）|
 |type|String|是|1:开多 2:开空 3:平多 4:平空|
 |match_price|String|否|是否为对手价 0:不是    1:是   ,当取值为1时,price无效|
 |lever_rate|String|否|杠杆倍数，下单时无需传送，系统取用户在页面上设置的杠杆倍数。且“开仓”若有10倍多单，就不能再下20倍多单|
 
-4. POST /api/v1/future_trades_history    获取OKEX合约交易历史（非个人）
+4. POST /api/v1/future_trades_history    获取OKEX合约交易历史（非个人）访问频率 
 
-URL `https://www.okex.com/api/v1/future_trades_history` 
+URL `https://www.okex.com/api/v1/future_trades_history`   访问频率 2次/2秒 
 
 示例	
 
@@ -561,8 +562,7 @@ type：交易类型（buy/sell）
 
 5. POST /api/v1/future\_batch_trade   批量下单
 
-URL `https://www.okex.com/api/v1/future_batch_trade.do`  
-访问频率5次/秒	
+URL `https://www.okex.com/api/v1/future_batch_trade.do`  访问频率 3次/1秒 最多一次下1-5个订单（按币种单独计算）	
 
 示例	
 
@@ -599,14 +599,13 @@ order_id:订单ID
 |api_key|String|是|用户申请的apiKey|
 |symbol|String|是|btc\_usd   ltc\_usd    eth\_usd    etc\_usd    bch\_usd|
 |contract\_type|String|是|合约类型: this\_week:当周   next\_week:下周   quarter:季度|
-|order_data|String|是|JSON类型的字符串 例：[{price:5,amount:2,type:1,match\_price:1},{price:2,amount:3,type:1,match\_price:1}] 最大下单量为5，price,amount,type,match\_price参数参考future_trade接口中的说明|
+|orders_data|String|是|JSON类型的字符串 例：[{price:5,amount:2,type:1,match\_price:1},{price:2,amount:3,type:1,match\_price:1}] 最大下单量为5，price,amount,type,match\_price参数参考future_trade接口中的说明|
 |sign|String|是|请求参数的签名|
 |lever_rate|String|否|杠杆倍数，下单时无需传送，系统取用户在页面上设置的杠杆倍数。且“开仓”若有10倍多单，就不能再下20倍多单|
 
 6. POST /api/v1/future_cancel   取消合约订单
 
-URL `https://www.okex.com/api/v1/future_cancel.do`  
-访问频率10次/秒	
+URL `https://www.okex.com/api/v1/future_cancel.do`  访问频率 2次/1秒，最多一次撤1-5个订单（按币种单独计算） 	
 
 示例	
 
@@ -641,7 +640,7 @@ error:失败的订单ID后跟失败错误码(用户多笔订单)
 | :-----    | :-----   | :-----    | :-----   |
 |api_key|String|是|用户申请的apiKey|
 |symbol|String|是|btc\_usd   ltc\_usd    eth\_usd    etc\_usd    bch\_usd|
-|order_id|String|是|订单ID(多个订单ID中间以","分隔,一次最多允许撤消3个订单)|
+|order_id|String|是|订单ID(多个订单ID中间以","分隔,一次最多允许撤消5个订单)|
 |sign|String|是|请求参数的签名|
 |contract\_type|String|是|合约类型: this\_week:当周   next\_week:下周   quarter:季度|
 
@@ -787,7 +786,7 @@ status: 订单状态(0等待成交 1部分成交 2全部成交 -1撤单 4撤单�
 symbol: btc_usd   ltc_usd    eth_usd    etc_usd    bch_usd
 type: 订单类型 1：开多 2：开空 3：平多 4： 平空
 unit_amount:合约面值
-lever_rate: 杠杆倍数  value:10\20  默认10 
+lever_rate: 杠杆倍数  value:10\20  默认10  
 ```
 
 请求参数	
@@ -798,12 +797,11 @@ lever_rate: 杠杆倍数  value:10\20  默认10
 |contract\_type|String|是|合约类型: this\_week:当周   next\_week:下周   quarter:季度|
 |api_key|String|是|用户申请的apiKey|
 |sign|String|是|请求参数的签名|
-|order_id|String|是|订单ID -1:查询指定状态的订单，否则查询相应订单号的订单|
+|order_id|String|是|订单ID(多个订单ID中间以","分隔,一次最多允许查询50个订单)|
 
 9. POST /api/v1/future\_userinfo\_4fix   获取逐仓合约账户信息
 
 URL `https://www.okex.com/api/v1/future_userinfo_4fix.do`  
-
 
 示例	
 
@@ -870,7 +868,8 @@ rights:账户权益
 
 10. POST /api/v1/future\_position\_4fix   逐仓用户持仓查询
 
-URL `https://www.okex.com/api/v1/future_position_4fix.do`  
+URL `https://www.okex.com/api/v1/future_position_4fix.do`  访问频率 10次/2秒 
+
 示例	
 
 ```
@@ -1052,6 +1051,7 @@ result:划转结果。若是划转失败，将给出错误码提示。
 |symbol|String|是|btc\_usd   ltc\_usd    eth\_usd    etc\_usd    bch\_usd|
 |type|String|是|划转类型。1：币币转合约 2：合约转币币|
 |amount|String|是| 划转币的数量|
+
 
 
 

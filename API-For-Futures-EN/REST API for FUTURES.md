@@ -250,7 +250,7 @@ Example
 
 ```
 # Request
-GET https://www.okex.com/api/v1/future_depth.do?symbol=btc_usd
+GET https://www.okex.com/api/v1/future_estimated_price.do?symbol=btc_usd
 # Response
 {"forecast_price":5.4}
 ```
@@ -513,7 +513,7 @@ Simply place a order.
 Take order details and return order_id.  
 
 URL `https://www.okex.com/api/v1/future_trade.do`  
-Request frequency 5 times/s
+Request frequency 5 times/s(each coin has 5 times)
 
 Example
 
@@ -599,7 +599,7 @@ Request Parameters
 ##### 5. POST /api/v1/future\_batch_trade   Batch Trade
 
 URL `https://www.okex.com/api/v1/future_batch_trade.do`  
-
+Request frequency 3 times/s  (each coin has 3 times).you can place 5 orders at monst once
 
 Example
 
@@ -636,14 +636,14 @@ Request Parameters
 |api_key|apiKey of the user|
 |symbol|btc\_usd   ltc\_usd    eth\_usd    etc\_usd    bch\_usd|
 |contract\_type|this\_week   next\_week   quarter|
-|order\_data|JSON string example: [{price:5,amount:2,type:1,match\_price:1},{price:2,amount:3,type:1,match\_price:1}]. Max 5 orders per request. For 'price', 'amount', 'type' and 'match\_price' parameters, refer to future\_trade/API|
+|orders\_data|JSON string example: [{price:5,amount:2,type:1,match\_price:1},{price:2,amount:3,type:1,match\_price:1}]. Max 5 orders per request. For 'price', 'amount', 'type' and 'match\_price' parameters, refer to future\_trade/API|
 |sign|signature of request parameters|
 |lever_rate|Leverage settings have to be adjusted on the trading page before creating an order. If you currently have 10x open order(s) or holding position(s), you cannot create a new 20x order.|
 
 ##### 6. POST /api/v1/future_cancel   Cancel Orders
 
 URL `https://www.okex.com/api/v1/future_cancel.do`  
-Request frequency 10 times/s
+Request frequency 2 times/s  (each coin has 2 times).you can cancel 5 orders at monst once
 
 Example
 
@@ -670,7 +670,7 @@ Request Parameters
 | :-----    | :-----   |
 |api_key|apiKey of the user|
 |symbol|btc\_usd   ltc\_usd    eth\_usd    etc\_usd    bch\_usd|
-|order_id|order ID (multiple orders are separated by a comma ',', Max of 3 orders are allowed per request)|
+|order_id|order ID (multiple orders are separated by a comma ',', Max of 5 orders are allowed per request)|
 |sign|signature of request parameters|
 |contract\_type|this\_week   next\_week   quarter|
 
